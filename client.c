@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	opterr = 1; 		/* set to 0 to disable error message */
 
 	char buf[80];
-	char message[1024];
+	char message[BUFFSIZE];
 	int bytes;
 	unsigned long int inaddr;
 	int sock, serv_host_port;
@@ -126,15 +126,29 @@ int main(int argc, char *argv[])
 	readSocket(sock, message, BUFFSIZE);
 	printf("received: %s\n", message);
 
-	/* read from stdin, sending to server, until quit */
-	while (fgets(buf, 80, stdin)) {
-		buf[strlen(buf)-1] = '\0'; /* remove last \n */
-		printf("sending: '%s'\n", buf);
-		if (write(sock, buf, strlen(buf)) == -1) {
-			perror("write failed");
-			break;
-		}
+	/* send command to server */
+	writeSocket(sock, command, BUFFSIZE);
+
+	/* receivce result from command to server */
+	while((bytes = read(sock, message, BUFFSIZE)) > 0) {
+		message[bytes] = '\0';
+		printf("%s\n", message);
 	}
+	if (bytes == -1)
+		perror("error in read");
+	else
+		printf("client exiting\n");
+
+
+	/* read from stdin, sending to server, until quit */
+	// while (fgets(buf, 80, stdin)) {
+	// 	buf[strlen(buf)-1] = '\0'; /* remove last \n */
+	// 	printf("sending: '%s'\n", buf);
+	// 	if (write(sock, buf, strlen(buf)) == -1) {
+	// 		perror("write failed");
+	// 		break;
+	// 	}
+	// }
 
 	/* close socket */
 	close(sock);

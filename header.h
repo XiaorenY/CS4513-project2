@@ -3,7 +3,7 @@
 
 #define USERNAME "abc"
 #define PASSWORD "cba"
-#define BUFFSIZE 128
+#define BUFFSIZE 1024
 
 int writeSocket(int sock, void *writeBuf, int len) {
 	int bytesWrite;

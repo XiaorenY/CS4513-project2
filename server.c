@@ -33,14 +33,17 @@ int main(int argc, char *argv[])
 
 	opterr = 1;				/* set to 0 to disable error message */
 
-	char message[1024];
-	char respond[1024];
+	char message[BUFFSIZE];
+	char respond[BUFFSIZE];
 	char salt[3];
 	int bytes;
 	int sock, serv_host_port, clilen, newsock;
 	struct sockaddr_in cli_addr, serv_addr;
 
 	int pid; 		/* process id */
+
+	/* used for pipe */
+	FILE *pp;
 
 	printf("processing argument: %d\n", optind);
 	while((c = getopt(argc, argv, "p:h")) != EOF) {
@@ -108,7 +111,7 @@ int main(int argc, char *argv[])
 			puts("I am the child");
 			close(sock);
 
-			/* read data until no more */
+			/* read user-name */
 			readSocket(newsock, message, BUFFSIZE);
 			printf("first received: '%s'\n", message);
 			
@@ -116,12 +119,12 @@ int main(int argc, char *argv[])
 			/* write a random number back to client */
 			srand(time(NULL));
 			sprintf(salt, "%d", rand() % 90 + 10);
-
 			writeSocket(newsock, salt, 3);
 
+			/* read encrypted message */
 			readSocket(newsock, message, BUFFSIZE);
 			printf("second received: '%s'\n", message);
-
+			/* check password by strcmp encrypt message */
 			if(strcmp(message, crypt(PASSWORD, salt)) != 0){
 				writeSocket(newsock, "Wrong password", BUFFSIZE);
 			}
@@ -129,16 +132,30 @@ int main(int argc, char *argv[])
 				writeSocket(newsock, "Correct password", BUFFSIZE);				
 			}
 
+			/* read command from client and excecute it */
+			readSocket(newsock, message, BUFFSIZE);
+
+			// system(message);
+			if((pp = popen(message, "r")) == NULL) {
+				perror("popen()");
+				exit(1);
+			}
+			while(fgets(respond, sizeof(respond), pp) != NULL){
+				printf("%s\n", respond);
+				writeSocket(newsock, respond, BUFFSIZE);
+			}
+			pclose(pp);
+
 			/* read data until no more */
 			/* read encrypt password */
-			if ((bytes = read(newsock, message, 1024)) > 0) {
-				message[bytes] = '\0'; /* do this just so we can print as string */
-				printf("second received: '%s'\n", message);
-			}
-			else if (bytes == -1)
-				perror("error in read");
-			else
-				printf("server exiting\n");
+			// if ((bytes = read(newsock, message, BUFFSIZE)) > 0) {
+			// 	message[bytes] = '\0'; /* do this just so we can print as string */
+			// 	printf("second received: '%s'\n", message);
+			// }
+			// else if (bytes == -1)
+			// 	perror("error in read");
+			// else
+			// 	printf("server exiting\n");
 
 
 
