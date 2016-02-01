@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
 	struct hostent *hp;
 
 	char *command;
+	char *result = "";
 
 	printf("processing argument: %d\n", optind);
 	while((c = getopt(argc, argv, "c:s:p:h")) != EOF) {
@@ -132,23 +133,13 @@ int main(int argc, char *argv[])
 	/* receivce result from command to server */
 	while((bytes = read(sock, message, BUFFSIZE)) > 0) {
 		message[bytes] = '\0';
-		printf("%s\n", message);
+		printf("%s", message);
+		// result = concat(result, message);
 	}
 	if (bytes == -1)
 		perror("error in read");
 	else
 		printf("client exiting\n");
-
-
-	/* read from stdin, sending to server, until quit */
-	// while (fgets(buf, 80, stdin)) {
-	// 	buf[strlen(buf)-1] = '\0'; /* remove last \n */
-	// 	printf("sending: '%s'\n", buf);
-	// 	if (write(sock, buf, strlen(buf)) == -1) {
-	// 		perror("write failed");
-	// 		break;
-	// 	}
-	// }
 
 	/* close socket */
 	close(sock);
@@ -163,6 +154,5 @@ void usage() {
 	fprintf(stderr, "\t-p <port>\t- port\n");
 	fprintf(stderr, "\t[-h] optional argument, ask for display usage\n\n");
 }
-
 
 

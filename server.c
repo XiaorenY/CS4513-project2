@@ -135,29 +135,38 @@ int main(int argc, char *argv[])
 			/* read command from client and excecute it */
 			readSocket(newsock, message, BUFFSIZE);
 
-			// system(message);
-			if((pp = popen(message, "r")) == NULL) {
-				perror("popen()");
-				exit(1);
+			/* parse the incoming command first */
+			char *str = strdup(message);
+			char ** res  = NULL;
+			char *  p    = strtok (str, " ");
+			int n_spaces = 0, i;
+
+			/* split string and append tokens to 'res' */
+			while (p) {
+				res = realloc (res, sizeof (char*) * ++n_spaces);
+
+				if (res == NULL)
+				exit (-1); /* memory allocation failed */
+
+				res[n_spaces-1] = p;
+
+				p = strtok (NULL, " ");
 			}
-			while(fgets(respond, BUFFSIZE, pp) != NULL){
-				printf("%s\n", respond);
-				writeSocket(newsock, respond, BUFFSIZE);
+
+			/* realloc one extra element for the last NULL */
+
+			res = realloc (res, sizeof (char*) * (n_spaces+1));
+			res[n_spaces] = 0;
+
+			/* free the memory allocated */
+			dup2(newsock, 1);
+			int eRtn = execvp(*res, res);
+			if(eRtn){
+				perror("execvp()");
+				exit(eRtn);
 			}
-			pclose(pp);
 
-			/* read data until no more */
-			/* read encrypt password */
-			// if ((bytes = read(newsock, message, BUFFSIZE)) > 0) {
-			// 	message[bytes] = '\0'; /* do this just so we can print as string */
-			// 	printf("second received: '%s'\n", message);
-			// }
-			// else if (bytes == -1)
-			// 	perror("error in read");
-			// else
-			// 	printf("server exiting\n");
-
-
+			free (res);
 
 			/* close connected socket and original socket */
 			close(newsock);
