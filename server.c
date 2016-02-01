@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
 				perror("popen()");
 				exit(1);
 			}
-			while(fgets(respond, sizeof(respond), pp) != NULL){
+			while(fgets(respond, BUFFSIZE, pp) != NULL){
 				printf("%s\n", respond);
 				writeSocket(newsock, respond, BUFFSIZE);
 			}
