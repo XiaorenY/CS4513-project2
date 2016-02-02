@@ -3,7 +3,7 @@
 # measure time to setup connection, authentication. 
 # use option -t to tear down the exec() call
 timesum=0
-for i in {0..99}
+for i in {0..49}
 do
 	sync
 	time0=$(date +%s%3N)
@@ -12,11 +12,11 @@ do
 	time1=$(date +%s%3N)
 
 	timediff=$((time1-time0))
-	echo "latency time is $timediff"
+	echo "latency time is $timediff milliseconds"
 	timesum=$((timesum+timediff))
 
 done
 
-timeavg=$((timesum/100)) | bc -l
-echo "average latency is $timeavg"
+timeavg=$((timesum/50))
+echo "average latency is $timeavg milliseconds"
 

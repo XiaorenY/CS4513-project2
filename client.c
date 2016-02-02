@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 	char *command;
 	char *result = "";
 
-	printf("processing argument: %d\n", optind);
+	// printf("processing argument: %d\n", optind);
 	while((c = getopt(argc, argv, "c:s:p:ht")) != EOF) {
 		switch(c) {
 			case 'c':
@@ -64,12 +64,12 @@ int main(int argc, char *argv[])
 			case 't':
 				tflag++;
 				break;
-			printf("processing argument: %d\n", optind);
+			// printf("processing argument: %d\n", optind);
 		}
 	}
 	if(cflag && sflag && pflag) {			/* argument is acceptable */
-		printf("Talk activated.\n\n");
-		printf("Trying to connect to server %s at port %d...\n", serv_host_addr, serv_host_port);
+		// printf("Talk activated.\n\n");
+		// printf("Trying to connect to server %s at port %d...\n", serv_host_addr, serv_host_port);
 	}
 	else {									/* missing one of three options */
 		fprintf(stderr, "Missing one of three options \n");
@@ -88,47 +88,47 @@ int main(int argc, char *argv[])
     * (Note - gethostbyname() deprecated, could use getaddrinfo())
     */
 	bzero((void *) &serv_addr, sizeof(serv_addr));
-	printf("Looking up %s...\n", serv_host_addr);
+	// printf("Looking up %s...\n", serv_host_addr);
 	if ((hp = gethostbyname(serv_host_addr)) == NULL) {
 		perror("host name error");
 		exit(1);
 	}
 	bcopy(hp->h_addr, (char *) &serv_addr.sin_addr, hp->h_length);
 
-	printf("Found it.  Setting port connection to %d...\n", serv_host_port);
+	// printf("Found it.  Setting port connection to %d...\n", serv_host_port);
 	serv_addr.sin_family = AF_INET;
 	serv_addr.sin_port = htons(serv_host_port);
 	/* serv_addr.sin_addr.s_addr = inet_addr(serv_host_addr); */
 
 	/* create a TCP socket (an Internet stream socket). */
-	puts("Done. Creating socket...");
+	// puts("Done. Creating socket...");
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
 		perror("creating socket");
 		exit(1);
 	}
 
 	/* socket created, so connect to the server */
-	puts("Created. Trying connection to server...");
+	// puts("Created. Trying connection to server...");
 	if (connect(sock, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
 		perror("can't connect");
 		exit(1);
 	}
 
-	printf("Connection established!\n");
-	printf("Type in messages to send to server.\n");
+	// printf("Connection established!\n");
+	// printf("Type in messages to send to server.\n");
 
 	/* sends in user-name */
 	writeSocket(sock, USERNAME, BUFFSIZE);
 
 	/* read data until no more */
 	readSocket(sock, message, 3);
-	printf("first received: '%s'\n", message);
+	// printf("first received: '%s'\n", message);
 
 	/* send encrypted value back */
 	writeSocket(sock, crypt(PASSWORD, message), BUFFSIZE);
 
 	readSocket(sock, message, BUFFSIZE);
-	printf("received: %s\n", message);
+	// printf("received: %s\n", message);
 
 	/* tear down the command executation if -t option */
 	if(tflag){
@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
 	if (bytes == -1)
 		perror("error in read");
 	else
-		printf("client exiting\n");
+		// printf("client exiting\n");
 
 	/* close socket */
 	close(sock);
