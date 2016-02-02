@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 {
 	/* parse argument */
 	int c;
-	int pflag = 0, hflag = 0, errflag = 0;
+	int pflag = 0, hflag = 0, tflag = 0, errflag = 0;
 	extern int optind, opterr;
 	extern char *optarg;
 
@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 	FILE *pp;
 
 	printf("processing argument: %d\n", optind);
-	while((c = getopt(argc, argv, "p:h")) != EOF) {
+	while((c = getopt(argc, argv, "p:ht")) != EOF) {
 		switch(c) {
 			case 'p':
 				pflag++;
@@ -54,6 +54,9 @@ int main(int argc, char *argv[])
 				break;
 			case 'h':
 				hflag++;
+				break;
+			case 't':
+				tflag++;
 				break;
 			printf("processing argument: %d\n", optind);
 		}
@@ -130,6 +133,12 @@ int main(int argc, char *argv[])
 			}
 			else {
 				writeSocket(newsock, "Correct password", BUFFSIZE);				
+			}
+
+			/* tear down the command executation if -t option */
+			if(tflag){
+				close(newsock);
+				exit(0);
 			}
 
 			/* read command from client and excecute it */

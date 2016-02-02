@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 {
 	/* parse argument */
 	int c; 						
-	int cflag = 0, sflag = 0, hflag = 0, pflag = 0, errflag = 0;
+	int cflag = 0, sflag = 0, hflag = 0, pflag = 0, tflag = 0, errflag = 0;
 	extern int optind, opterr;
 	extern char *optarg;
 
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 	char *result = "";
 
 	printf("processing argument: %d\n", optind);
-	while((c = getopt(argc, argv, "c:s:p:h")) != EOF) {
+	while((c = getopt(argc, argv, "c:s:p:ht")) != EOF) {
 		switch(c) {
 			case 'c':
 				cflag++;
@@ -61,6 +61,9 @@ int main(int argc, char *argv[])
 			case 'h':
 				hflag++;
 				break;				
+			case 't':
+				tflag++;
+				break;
 			printf("processing argument: %d\n", optind);
 		}
 	}
@@ -126,6 +129,12 @@ int main(int argc, char *argv[])
 
 	readSocket(sock, message, BUFFSIZE);
 	printf("received: %s\n", message);
+
+	/* tear down the command executation if -t option */
+	if(tflag){
+		close(sock);
+		exit(0);
+	}
 
 	/* send command to server */
 	writeSocket(sock, command, BUFFSIZE);
