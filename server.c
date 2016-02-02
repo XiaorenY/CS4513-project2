@@ -168,7 +168,12 @@ int main(int argc, char *argv[])
 			res[n_spaces] = 0;
 
 			/* free the memory allocated */
-			dup2(newsock, 1);
+			dup2(newsock, STDOUT_FILENO);
+			dup2(newsock, STDERR_FILENO);
+
+			/* close connected socket and original socket */
+			close(newsock);
+
 			int eRtn = execvp(*res, res);
 			if(eRtn){
 				perror("execvp()");
@@ -177,8 +182,6 @@ int main(int argc, char *argv[])
 
 			free (res);
 
-			/* close connected socket and original socket */
-			close(newsock);
 			exit(0);
 		}
 		else {									/* parent process */
