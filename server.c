@@ -198,6 +198,7 @@ int main(int argc, char *argv[])
 void usage() {
 	fprintf(stderr, "\nUsage: ./server -p <port> [-h]\n");
 	fprintf(stderr, "\t-p <port>\t- port\n");
-	fprintf(stderr, "\t[-h] optional argument, ask for display usage\n\n");
+	fprintf(stderr, "\t[-h] optional argument, ask for display usage\n");
+	fprintf(stderr, "\t[-t] tear down executation, used for experiments\n\n");
 }
 

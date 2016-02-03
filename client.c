@@ -161,7 +161,8 @@ void usage() {
 	fprintf(stderr, "\t-c <command>\t- command asked to excecute\n");
 	fprintf(stderr, "\t-s <host>\t- Internet name of server host\n");
 	fprintf(stderr, "\t-p <port>\t- port\n");
-	fprintf(stderr, "\t[-h] optional argument, ask for display usage\n\n");
+	fprintf(stderr, "\t[-h] optional argument, ask for display usage\n");
+	fprintf(stderr, "\t[-t] tear down executation, used for experiments\n\n");
 }
 
 

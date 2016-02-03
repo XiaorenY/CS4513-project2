@@ -12,7 +12,8 @@ do
 	do
 		sync
 		time0=$(date +%s%3N)
-		./client -c "cat test$j" -s ec2-52-33-162-225.us-west-2.compute.amazonaws.com -p 5000 > test$j
+		./client -c "cat test$j" -s 127.0.0.1 -p 5000 > test$j
+		# ./client -c "cat test$j" -s ec2-52-33-162-225.us-west-2.compute.amazonaws.com -p 5000 > test$j
 		sync
 		time1=$(date +%s%3N)
 
