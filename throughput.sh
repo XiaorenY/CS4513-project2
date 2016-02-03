@@ -8,7 +8,7 @@ do
 	# test with file size 1M
 	timesum=0
 	throughputsum=0
-	for i in {0..19}
+	for i in {0..9}
 	do
 		sync
 		time0=$(date +%s%3N)
@@ -23,12 +23,13 @@ do
 
 		throughput=$((filesize*1000/timediff))
 		timesum=$((timesum+timediff))
+		echo "test$j: latency is $timediff"
 		throughputsum=$((throughputsum+throughput))
-
+		echo "test$j: throughput is $throughput"
 	done
 
-	timeavg=$((timesum/20))
-	throughputavg=$((throughputsum/20))
+	timeavg=$((timesum/10))
+	throughputavg=$((throughputsum/10))
 	echo "test$j average latency is $timeavg milliseconds"
 	echo "test$j average throughput is $throughputavg bits per second"
 

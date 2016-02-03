@@ -1,0 +1,73 @@
+sysbench 0.4.12:  multi-threaded system evaluation benchmark
+
+Running the test with following options:
+Number of threads: 1
+
+Doing CPU performance benchmark
+
+Threads started!
+Done.
+
+Maximum prime number checked in CPU test: 20000
+
+
+Test execution summary:
+    total time:                          23.6141s
+    total number of events:              10000
+    total time taken by event execution: 23.6126
+    per-request statistics:
+         min:                                  2.10ms
+         avg:                                  2.36ms
+         max:                                 23.96ms
+         approx.  95 percentile:               2.53ms
+
+Threads fairness:
+    events (avg/stddev):           10000.0000/0.00
+    execution time (avg/stddev):   23.6126/0.00
+
+sysbench 0.4.12:  multi-threaded system evaluation benchmark
+
+128 files, 131072Kb each, 16384Mb total
+Creating files for the test...
+sysbench 0.4.12:  multi-threaded system evaluation benchmark
+
+Running the test with following options:
+Number of threads: 1
+Initializing random number generator from timer.
+
+
+Extra file open flags: 0
+128 files, 128Mb each
+16Gb total file size
+Block size 16Kb
+Number of random requests for random IO: 0
+Read/Write ratio for combined random IO test: 1.50
+Periodic FSYNC enabled, calling fsync() each 100 requests.
+Calling fsync() at the end of test, Enabled.
+Using synchronous I/O mode
+Doing random r/w test
+Threads started!
+Time limit exceeded, exiting...
+Done.
+
+Operations performed:  2631 Read, 1754 Write, 5504 Other = 9889 Total
+Read 41.109Mb  Written 27.406Mb  Total transferred 68.516Mb  (2.2835Mb/sec)
+  146.14 Requests/sec executed
+
+Test execution summary:
+    total time:                          30.0047s
+    total number of events:              4385
+    total time taken by event execution: 26.7299
+    per-request statistics:
+         min:                                  0.00ms
+         avg:                                  6.10ms
+         max:                                355.88ms
+         approx.  95 percentile:              16.26ms
+
+Threads fairness:
+    events (avg/stddev):           4385.0000/0.00
+    execution time (avg/stddev):   26.7299/0.00
+
+sysbench 0.4.12:  multi-threaded system evaluation benchmark
+
+Removing test files...
