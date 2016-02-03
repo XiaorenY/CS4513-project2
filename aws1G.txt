@@ -12,24 +12,23 @@ Maximum prime number checked in CPU test: 20000
 
 
 Test execution summary:
-    total time:                          28.4607s
+    total time:                          28.6911s
     total number of events:              10000
-    total time taken by event execution: 28.4586
+    total time taken by event execution: 28.6889
     per-request statistics:
-         min:                                  2.56ms
-         avg:                                  2.85ms
-         max:                                  3.94ms
-         approx.  95 percentile:               3.00ms
+         min:                                  2.57ms
+         avg:                                  2.87ms
+         max:                                  4.04ms
+         approx.  95 percentile:               3.01ms
 
 Threads fairness:
     events (avg/stddev):           10000.0000/0.00
-    execution time (avg/stddev):   28.4586/0.00
+    execution time (avg/stddev):   28.6889/0.00
 
 sysbench 0.4.12:  multi-threaded system evaluation benchmark
 
-128 files, 131072Kb each, 16384Mb total
+128 files, 16384Kb each, 2048Mb total
 Creating files for the test...
-FATAL: Failed to write file! errno = 28 ()
 sysbench 0.4.12:  multi-threaded system evaluation benchmark
 
 Running the test with following options:
@@ -38,8 +37,8 @@ Initializing random number generator from timer.
 
 
 Extra file open flags: 0
-128 files, 128Mb each
-16Gb total file size
+128 files, 16Mb each
+2Gb total file size
 Block size 16Kb
 Number of random requests for random IO: 0
 Read/Write ratio for combined random IO test: 1.50
@@ -48,26 +47,26 @@ Calling fsync() at the end of test, Enabled.
 Using synchronous I/O mode
 Doing random r/w test
 Threads started!
-FATAL: Failed to write file! file: 59 pos: 7651328 errno = 28 ()
+Time limit exceeded, exiting...
 Done.
 
-Operations performed:  1 Read, 0 Write, 0 Other = 1 Total
-Read 16Kb  Written 0b  Total transferred 16Kb  (9.7778Mb/sec)
-  625.78 Requests/sec executed
+Operations performed:  36000 Read, 24000 Write, 76696 Other = 136696 Total
+Read 562.5Mb  Written 375Mb  Total transferred 937.5Mb  (31.249Mb/sec)
+ 1999.93 Requests/sec executed
 
 Test execution summary:
-    total time:                          0.0016s
-    total number of events:              1
-    total time taken by event execution: 0.0004
+    total time:                          30.0010s
+    total number of events:              60000
+    total time taken by event execution: 9.1797
     per-request statistics:
-         min:                                  0.41ms
-         avg:                                  0.41ms
-         max:                                  0.41ms
-         approx.  95 percentile:         10000000.00ms
+         min:                                  0.00ms
+         avg:                                  0.15ms
+         max:                                 12.73ms
+         approx.  95 percentile:               0.44ms
 
 Threads fairness:
-    events (avg/stddev):           1.0000/0.00
-    execution time (avg/stddev):   0.0004/0.00
+    events (avg/stddev):           60000.0000/0.00
+    execution time (avg/stddev):   9.1797/0.00
 
 sysbench 0.4.12:  multi-threaded system evaluation benchmark
 
